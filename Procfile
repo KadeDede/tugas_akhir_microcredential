@@ -1,1 +1,1 @@
-web: gunicorn app:app --reload --worker-class gevent
+web: gunicorn run:app
