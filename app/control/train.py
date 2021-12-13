@@ -71,9 +71,9 @@ def training():
     print('f1-score_random_Forest : %.3f' % f1)
 
 
-    pickle.dump(LE_h, open(os.path.join(root_path, 'control/model_file/label_hastag.txt'), "wb"))
-    pickle.dump(LE_m, open(os.path.join(root_path, 'control/model_file/label_music.txt'), "wb"))
-    pickle.dump(random_forest, open(os.path.join(root_path, 'control/model_file/model_random_forest.txt'), "wb"))
+    pickle.dump(LE_h, open(os.path.join(root_path, 'control/analysis_file/label_hastag.txt'), "wb"))
+    pickle.dump(LE_m, open(os.path.join(root_path, 'control/analysis_file/label_music.txt'), "wb"))
+    pickle.dump(random_forest, open(os.path.join(root_path, 'control/analysis_file/model_random_forest.txt'), "wb"))
 
 
 

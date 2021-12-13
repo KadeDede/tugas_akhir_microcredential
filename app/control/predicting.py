@@ -37,9 +37,9 @@ def predicting(music, hastag, follower, love_count):
     trainData = pd.read_csv(os.path.join(root_path, path_name))
     print(trainData.head(4))
 
-    LE_h = pickle.load(open(os.path.join(root_path,'control/model_file/label_hastag.txt'),"rb"))
-    LE_m = pickle.load(open(os.path.join(root_path,'control/model_file/label_music.txt'),"rb"))
-    random_forest = pickle.load(open(os.path.join(root_path,'control/model_file/model_random_forest.txt'),"rb"))
+    LE_h = pickle.load(open(os.path.join(root_path,'control/analysis_file/label_hastag.txt'),"rb"))
+    LE_m = pickle.load(open(os.path.join(root_path,'control/analysis_file/label_music.txt'),"rb"))
+    random_forest = pickle.load(open(os.path.join(root_path,'control/analysis_file/model_random_forest.txt'),"rb"))
 
     dataframeTiktok = pd.DataFrame([[music,hastag,follower,love_count]],
                                    columns=['music', 'hastag_data','author_follower', 'author_heart'])
