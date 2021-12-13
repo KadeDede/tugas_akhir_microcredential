@@ -5,3 +5,4 @@ pandas==1.1.5
 PyTikTokAPI==0.0.5
 scikit-learn==0.24.2
 Flask==2.0.2
+gevent==21.12.0
