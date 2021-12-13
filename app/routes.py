@@ -43,7 +43,8 @@ def analysis():
         music = req.get('music')
         # data_tiktok = get_data_tiktok.getdata(hastag)
 
-        run_analisis = predicting.predicting(music, hastag, author_follow, author_love)
+        # run_analisis = predicting.predicting(music, hastag, author_follow, author_love)
+        run_analisis = 123
         return jsonify({
             'estimate': str(run_analisis),
         })
