@@ -9,11 +9,13 @@
     <title>TikTok Analytic</title>
     <link rel="stylesheet" href="{{ url_for('static',filename='css/nicepage.css')}}" media="screen">
     <link rel="stylesheet" href="{{ url_for('static',filename='css/About.css')}}" media="screen">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>
     <meta name="generator" content="Nicepage 4.1.0, nicepage.com">
     <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
-
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <script type="application/ld+json">{
 		"@context": "http://schema.org",
@@ -58,16 +60,39 @@
                               </div>
                               <div class="u-form-group u-form-group-3">
                                 <label for="get-hastag" class="u-label">#Hashtag</label>
-                                <input type="text" placeholder="Enter your hashtag" id="get-hastag" name="hastag" class="u-border-2 u-border-black u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-white">
+                                <div>
+                                  <select class="js-example-basic-single" name="state" id="get-hastag" style="width:80%;margin-top:20px;">
+                                  <option value="AL">Alabama</option>
+                                  <option value="WY">Wyoming</option>
+                                  <option value="AL">Alabama</option>
+                                  <option value="WY">Wyoming</option>
+                                  <option value="AL">Alabama</option>
+                                  <option value="WY">Wyoming</option>
+                                </select>
+                                </div>
+
+<!--                                <input type="text" placeholder="Enter your hashtag" id="get-hastag" name="hastag" class="u-border-2 u-border-black u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-white">-->
                               </div>
-                              <div class="u-form-group u-form-group-4">
-                                <label for="get-music" class="u-label">Music</label>
-                                <input type="text" placeholder="Enter the music title" id="get-music" name="music" class="u-border-2 u-border-black u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-white">
+                              <div class="u-form-group u-form-group-3">
+
+                                <label class="u-label">Music</label>
+                                <div>
+                                  <select class="js-example-basic-single" name="state" id="get-music" style="width:80%;margin-top:20px;">
+                                    <option value="AL">Alabama</option>
+                                    <option value="WY">Wyoming</option>
+                                    <option value="AL">Alabama</option>
+                                    <option value="WY">Wyoming</option>
+                                    <option value="AL">Alabama</option>
+                                    <option value="WY">Wyoming</option>
+                                  </select>
+                                </div>
+
+<!--                                <input type="text" placeholder="Enter the music title" id="get-music" name="music" class="u-border-2 u-border-black u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-white">-->
                               </div>
                               <div class="u-form-group u-form-message u-form-textarea u-form-group-5">
                                 <label for="estimate" class="u-label">Estimate views of the video</label>
-                                <textarea rows="4" cols="50" id="estimate" name="forecast" class="u-border-2 u-border-black u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-white" placeholder="Total views based on hashtag and music"></textarea>
-                                <button type="button" class="btn btn-primary"></button>
+                                <h2 id="estimate">0</h2>
+                                <button type="button" class="btn btn-primary" id="tombol-analysis" style="width:300px;height:50px;margin-left:35px;margin-top:20px">analisis</button>
                               </div>
 
                             </form>
@@ -99,11 +124,46 @@
   </body>
 </html>
 <script>
-  $('#get-music').change(function(){
-       var hastag = $('#get-hastag').val()
+  $(document).ready(function() {
+      $('.js-example-basic-single').select2();
+      getdatamusic()
+
+  });
+
+  function getdatamusic(){
+    let element_music;
+    let element_hastag;
+     $.ajax({
+        url: 'data_option',
+        type: 'GET',
+        datatType: 'json',
+        success: function (data) {
+          $.each(data.music, function(i, val) {
+          console.log(val)
+            element_music += '<option value="'+val+'" data-id="'+val+'">'+val+'</option>';
+          });
+
+          $.each(data.hastag, function(i, val) {
+            element_hastag += '<option value="'+val+'" data-id="'+val+'">'+val+'</option>';
+          });
+          $('#get-hastag').html(element_hastag);
+          $('#get-music').html(element_music);
+         }
+      });
+    }
+
+
+
+  $('#tombol-analysis').click(function(){
        var fl_count = $('#fl-count').val()
        var fl_love = $('#fl-love').val()
-       var music = $('#get-music').val()
+
+       var music_selected = $('#get-music option:selected');
+       var music = music_selected.data('id');
+
+       var hastag_selected = $('#get-hastag option:selected');
+       var hastag = hastag_selected.data('id');
+
        analysis(hastag,fl_count,fl_love,music);
   });
 
@@ -125,7 +185,7 @@
         dataType: 'json',
         success:function(response){
           console.log(response)
-          $('#estimate').val(response.estimate);
+          $('#estimate').text(response.estimate);
         }
       });
   }

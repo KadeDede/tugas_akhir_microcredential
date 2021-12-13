@@ -45,8 +45,8 @@ def predicting(music, hastag, follower, love_count):
                                    columns=['music', 'hastag_data','author_follower', 'author_heart'])
 
 
-    dataframeTiktok['music'] = LE_m.transform(['Lazada 1212 Meriah'])
-    dataframeTiktok['hastag_data'] = LE_h.transform(['lazada1212meriah'])
+    dataframeTiktok['music'] = LE_m.transform(dataframeTiktok['music'])
+    dataframeTiktok['hastag_data'] = LE_h.transform(dataframeTiktok['hastag_data'])
     print(dataframeTiktok)
     Y_prediction = random_forest.predict(dataframeTiktok.values)
     print(Y_prediction)

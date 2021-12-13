@@ -46,6 +46,7 @@ def training():
     trainData['music'] = LE_m.fit_transform(trainData['music'])
     trainData['hastag_data'] = LE_h.fit_transform(trainData['hastag_data'])
     # trainData = trainData.apply(LE.fit_transform)
+    trainData.to_csv(os.path.join(root_path, 'control/analysis_file/label_encoder.csv'),index = False, header=True)
     print(trainData)
     X = trainData.iloc[:, 1:5].values
     y = trainData.iloc[:, 5].values
