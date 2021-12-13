@@ -5,6 +5,7 @@ from flask import send_file
 from app.control import get_data_tiktok
 from app.control import train
 from app.control import predicting
+from app.control import get_data_option
 from flask import Flask, render_template
 import asyncio
 
@@ -60,4 +61,17 @@ def trains():
         run_analisis = train.training()
         return jsonify({
             'estimate': str(run_analisis),
+        })
+
+
+@app.route('/data_option', methods=['POST','GET'])
+def data_option():
+    if request.method == 'GET':
+
+
+        data = get_data_option.get_music()
+        print(data)
+        return jsonify({
+            'music': data['music'],
+            'hastag': data['hastag']
         })
