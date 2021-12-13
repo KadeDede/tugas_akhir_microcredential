@@ -11,7 +11,8 @@ import asyncio
 @app.route('/')
 @app.route('/index')
 def index():
-    return render_template('index.html')
+    # return render_template('index.html')
+    return "mantap jiwa"
 
 # @app.route('/get_data', methods=['POST'])
 # def get_data():
